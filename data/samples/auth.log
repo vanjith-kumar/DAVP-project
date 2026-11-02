@@ -1,0 +1,7 @@
+Oct 11 10:45:01 hostname sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2
+Oct 11 10:45:02 hostname sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2
+Oct 11 10:45:03 hostname sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2
+Oct 11 10:45:04 hostname sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2
+Oct 11 10:45:05 hostname sshd[1234]: Failed password for invalid user admin from 192.168.1.100 port 22 ssh2
+Oct 11 10:45:10 hostname sshd[1235]: Accepted password for admin from 192.168.1.100 port 22 ssh2
+Oct 11 10:50:01 hostname sudo: admin : TTY=pts/0 ; PWD=/home/admin ; USER=root ; COMMAND=/bin/bash

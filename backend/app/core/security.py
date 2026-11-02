@@ -26,3 +26,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
+
+def decode_access_token(token: str) -> dict:
+    try:
+        decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
+        return decoded_token
+    except jwt.JWTError:
+        return None

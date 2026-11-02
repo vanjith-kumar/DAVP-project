@@ -1,6 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Logs from './pages/Logs';
+import Alerts from './pages/Alerts';
+import LiveMonitoring from './pages/LiveMonitoring';
+import Incidents from './pages/Incidents';
+import Admin from './pages/Admin';
+import PacketAnalyzer from './pages/PacketAnalyzer';
 import Layout from './components/Layout';
 
 function App() {
@@ -9,14 +15,15 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         
-        {/* Protected Routes placeholder */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="logs" element={<div className="p-4">Logs (Phase 2)</div>} />
-          <Route path="alerts" element={<div className="p-4">Alerts (Phase 2)</div>} />
-          <Route path="incidents" element={<div className="p-4">Incidents (Phase 5)</div>} />
-          <Route path="admin" element={<div className="p-4">Admin (Phase 4)</div>} />
+          <Route path="live-monitoring" element={<LiveMonitoring />} />
+          <Route path="logs" element={<Logs />} />
+          <Route path="alerts" element={<Alerts />} />
+          <Route path="incidents" element={<Incidents />} />
+          <Route path="packet-analyzer" element={<PacketAnalyzer />} />
+          <Route path="admin" element={<Admin />} />
         </Route>
       </Routes>
     </Router>

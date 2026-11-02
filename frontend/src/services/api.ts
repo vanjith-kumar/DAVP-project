@@ -12,6 +12,17 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const authService = {
   login: async (credentials: any) => {
     const formData = new URLSearchParams();
@@ -26,6 +37,10 @@ export const authService = {
     if (response.data.access_token) {
       localStorage.setItem('token', response.data.access_token);
     }
+    return response.data;
+  },
+  register: async (userData: any) => {
+    const response = await api.post('/auth/register', userData);
     return response.data;
   },
   logout: () => {

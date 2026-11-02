@@ -1,9 +1,313 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* DAY MODE TOKENS - Enterprise Security Dashboard */
+  --bg-app: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8fafc;
+  --bg-surface-hover: #f1f5f9;
+  --bg-input: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.9);
+  
+  --border-subtle: rgba(226, 232, 240, 0.9);
+  --border-prominent: #cbd5e1;
+  --border-highlight: rgba(255, 255, 255, 0.85);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-subtle: rgba(37, 99, 235, 0.08);
+
+  --shadow-level-1: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-level-2: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-level-3: 0 16px 28px -4px rgba(15, 23, 42, 0.12), 0 6px 12px -4px rgba(15, 23, 42, 0.06);
+  --shadow-inset: inset 0 2px 4px 0 rgba(15, 23, 42, 0.04);
+  --card-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+}
+
+.dark {
+  /* DARK MODE TOKENS - SOC Command Center */
+  --bg-app: #080c14;
+  --bg-surface: #0f172a;
+  --bg-surface-elevated: #162032;
+  --bg-surface-hover: #1e293b;
+  --bg-input: #0a0f1d;
+  --bg-sidebar: #0b111e;
+  --bg-header: rgba(11, 17, 30, 0.9);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-prominent: rgba(255, 255, 255, 0.16);
+  --border-highlight: rgba(255, 255, 255, 0.07);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --accent-subtle: rgba(59, 130, 246, 0.14);
+
+  --shadow-level-1: 0 4px 12px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  --shadow-level-2: 0 10px 25px -3px rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  --shadow-level-3: 0 20px 35px -5px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.45);
+  --card-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
+}
+
+/* 3D Glassmorphism & Depth Utilities */
+@layer utilities {
+  .animated-bg {
+    background-color: var(--bg-app);
+    background-image: 
+      radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.04) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(99, 102, 241, 0.04) 0px, transparent 50%);
+  }
+  .dark .animated-bg {
+    background-color: #080c14;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.18), transparent 30%),
+      radial-gradient(circle at 90% 80%, rgba(88, 28, 135, 0.12), transparent 30%),
+      radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.4), transparent 50%);
+  }
+
+  /* Level 1 Surface */
+  .card-3d {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-level-1);
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Level 1 Surface that lifts on hover */
+  .card-3d-interactive {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-level-1);
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-3d-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-level-2);
+    border-color: var(--border-prominent);
+  }
+
+  /* Level 2 Surface: Elevated */
+  .card-3d-elevated {
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-level-2);
+    position: relative;
+  }
+
+  /* Recessed 3D Input */
+  .input-3d {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-inset);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+  }
+  .input-3d:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-subtle), var(--shadow-inset);
+  }
+
+  /* 3D Primary Button */
+  .btn-3d-primary {
+    background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .btn-3d-primary:hover {
+    background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .btn-3d-primary:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(37, 99, 235, 0.3);
+  }
+
+  /* 3D Secondary Button */
+  .btn-3d-secondary {
+    background-color: var(--bg-surface-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-level-1);
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .btn-3d-secondary:hover {
+    background-color: var(--bg-surface-hover);
+    border-color: var(--border-prominent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-level-2);
+  }
+  .btn-3d-secondary:active {
+    transform: translateY(1px);
+  }
+
+  /* 3D Danger Button */
+  .btn-3d-danger {
+    background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(225, 29, 72, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .btn-3d-danger:hover {
+    background: linear-gradient(180deg, #fb7185 0%, #e11d48 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(225, 29, 72, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .btn-3d-danger:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(225, 29, 72, 0.3);
+  }
+
+  /* Backward Compatibility with glass-panel and glass-card */
+  .glass-panel {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-level-1);
+    border-radius: 0.75rem;
+  }
+  .dark .glass-panel {
+    background-color: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-level-1);
+  }
+
+  .glass-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-level-1);
+    border-radius: 0.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .dark .glass-card {
+    background-color: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-level-1);
+  }
+
+  .glass-header {
+    background-color: var(--bg-header);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+
+  .btn-3d {
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-level-1);
+  }
+  .btn-3d:hover {
+    transform: translateY(-1.5px);
+    box-shadow: var(--shadow-level-2);
+  }
+  .btn-3d:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+}
+
+/* High-Contrast Day Mode Rules for SOC Elements */
+html:not(.dark) .glass-panel {
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+}
+
+html:not(.dark) .glass-card {
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+}
+
+html:not(.dark) [class*="border-white/10"],
+html:not(.dark) [class*="border-white/20"],
+html:not(.dark) [class*="border-white/5"] {
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) [class*="bg-white/5"],
+html:not(.dark) [class*="bg-white/10"] {
+  background-color: #f1f5f9 !important;
+  color: #1e293b;
+}
+
+html:not(.dark) [class*="bg-black/10"],
+html:not(.dark) [class*="bg-black/20"],
+html:not(.dark) [class*="bg-black/40"] {
+  background-color: #f8fafc !important;
+  color: #1e293b;
+}
+
+html:not(.dark) .text-gray-100,
+html:not(.dark) .text-gray-200 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .text-gray-300 {
+  color: #334155 !important;
+}
+
+html:not(.dark) .text-gray-400 {
+  color: #64748b !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.6);
 }

@@ -13,6 +13,11 @@ class Settings(BaseSettings):
     CORS_ORIGINS: Union[str, List[str]] = ["http://localhost:5173", "http://localhost:3000"]
 
     DATABASE_URL: str
+    
+    THREAT_INTEL_PROVIDER: str = "mock"
+    THREAT_INTEL_API_KEY: str = ""
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "qwen2.5-coder:32b"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
